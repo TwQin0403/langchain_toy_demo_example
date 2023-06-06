@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Arxiv Summary Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        #loading-message {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Arxiv Summary Generator</h1>
+        <input type="text" id="arxiv-id" placeholder="Enter Arxiv ID" />
+        <button onclick="generate('pdf')">Generate PDF</button>
+        <button onclick="generate('tex')">Generate TeX</button>
+        <div id="loading-message">Generating... Please wait...</div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function generate(filetype) {
+            var arxiv_id = $('#arxiv-id').val();
+            if (!arxiv_id) {
+                alert('Please enter an Arxiv ID.');
+                return;
+            }
+
+            $('#loading-message').show();
+
+            $.ajax({
+                url: '/generate',
+                method: 'post',
+                data: { arxiv_id: arxiv_id, filetype: filetype },
+                success: function (response) {
+                    $('#loading-message').hide();
+
+                    // Add a download link to the page
+                    var a = document.createElement('a');
+                    a.href = response.file_url;
+                    a.download = arxiv_id + '.' + filetype;
+                    a.text = 'Download ' + filetype.toUpperCase();
+                    document.body.append(a);
+                },
+                error: function () {
+                    $('#loading-message').hide();
+                    alert('Error occurred. Please try again.');
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
