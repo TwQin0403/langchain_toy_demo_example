@@ -27,8 +27,14 @@ make run_app
 ## Demonstration
 
 The app appears as follows:
+
 ![app](https://github.com/TwQin0403/langchain_toy_demo_example/blob/main/fig/app.png)
+
 Input the Arxiv ID and initiate the process to generate the slides. Once it is completed, a download link will be displayed.
+
 ![app_link](https://github.com/TwQin0403/langchain_toy_demo_example/blob/main/fig/app_link.png)
+
 This will produce a PDF file output.
+
 ![output](https://github.com/TwQin0403/langchain_toy_demo_example/blob/main/fig/output.png)
+
